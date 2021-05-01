@@ -22,7 +22,7 @@ class Test(unittest.TestCase):
     def setUp(self):
         pass
 
-     
+    
     def test1_searchPatients(self):
         print('\n\ttest1_searchPatients: all patients')
         
@@ -385,9 +385,9 @@ class Test(unittest.TestCase):
         print('\n\ttest12_vaccine: patient with 2 dosage ')
         print()
         Test.mark+=0.75
-        print('\ttest12_makeAppointment: was OK!!!')
+        print('\ttest12_makeAppointment: was OK!!!') 
         
-    """
+    
     def test_13_makeAppointment(self):
         print('\n\ttest13_makeAppointment: patient not exist')
         
@@ -497,8 +497,9 @@ class Test(unittest.TestCase):
 
         print()
         Test.mark+=0.25
-        print('\ttest16_makeAppointment: was OK!!!')
-    
+        print('\ttest16_makeAppointment: was OK!!!') 
+        
+
     def test_17_makeAppointment(self):
         print('\n\ttest17_makeAppointment: time is free')
         
@@ -705,8 +706,8 @@ class Test(unittest.TestCase):
 
         print()
         Test.mark+=0.75
-        print('\ttest22_makeAppointment: was OK!!!')"""
-    
+        print('\ttest22_makeAppointment: was OK!!!')
+     
     def test_showmark(self):
         print('Total mark is ', Test.mark)
     

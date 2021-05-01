@@ -208,29 +208,116 @@ class HealthCenter2(BinarySearchTree):
         if checkFormatHour(time) == False:
             print("Incorrect Hour")
             return False
-
-        patient = self.find(name)
-
+        patient_node = self.find(name)
+           
         #We check if the patient is on the Center
-        if not patient:
+        if not patient_node:
             print("Patient {} doesn´t exist".format(name))
             return False
 
         #We check if the patient has already 2 doses
-        if patient:
-            if patient.elem.vaccine == 2:
+        if patient_node:
+            if patient_node.elem.vaccine == 2:
                 print("Patient {} has  already both doses".format(name))
                 return False
 
-        found = schedule.search(time)
-        if found:
-            print("CONSEGUI EL TIMEEEEEEEEEEEEEEE")
+        found = schedule.search(time)     
 
-        if not found:
-            schedule.insert(time, patient)
-            print("PATIENT ADDED!!!")
+        if found == False:
+            patient_node.elem.appointment = time
+    
+            schedule.insert(time, patient_node.elem)
+            print("Hora libre:", time)
+
             return True
-        return None
+             
+        (hour_time, min_time) = time.split(":")
+        
+        hour_time = int(hour_time)
+        min_time = int(min_time)
+        added = False
+        finished = False
+        
+        min_pre = min_time-5
+        hour_pre = hour_time
+        
+        min_post = min_time+5
+        hour_post = hour_time
+            
+        while not finished:
+            
+            
+            if min_pre<0:
+                min_pre = 55
+                hour_pre -= 1
+            
+            if min_post >55:
+                min_post = 0
+                hour_post += 1
+                
+            if hour_post >19 and hour_pre < 8:
+                finished = True
+                
+          
+            str_min_pre = str(min_pre)
+            if min_pre<10:
+                str_min_pre = "0"+str_min_pre 
+            
+            str_min_post = str(min_post)
+            if min_post<10:
+                str_min_post = "0"+str_min_post
+                
+            str_hour_pre = str(hour_pre)
+            if hour_pre<10:
+                str_hour_pre = "0"+str_hour_pre 
+            
+            str_hour_post = str(hour_post)    
+            if hour_post<10:
+                str_hour_post = "0"+str_hour_post
+            
+            str_pre = str_hour_pre+":"+str_min_pre
+            str_post = str_hour_post+":"+str_min_post
+            
+            
+            if hour_pre >= 8:
+                found_pre = schedule.search(str_pre)
+            else:
+                found_pre = True
+                
+                
+            if hour_post > 19:
+                found_post = True
+            else:
+                found_post = schedule.search(str_post)
+                
+            
+            #Here first we check the previous hour because if it is available then we assign it because its the earlier one.
+            if not found_pre:
+                print("Requested Hour: ", time)
+                print("Closest free hour: ", str_pre)
+                patient_node.elem.appointment = str_pre
+
+                schedule.insert(str_pre, patient_node.elem)
+                added = True
+                finished = True
+            #If there are not earlier hours available, then we check for the later ones.
+            else:
+                if not found_post:
+                    print("Requested Hour: ", time)
+                    print("Closest free hour: ", str_post)
+                    patient_node.elem.appointment = str_post
+                    schedule.insert(str_post, patient_node.elem)
+                    added = True
+                    finished = True
+                else:
+                    min_pre -=5
+                    min_post+=5
+             
+        if not added:
+            print("There are not slots")
+        
+        return added
+        
                 
 
 
