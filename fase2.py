@@ -22,7 +22,9 @@ def checkFormatHour(time):
     
     return False
 
-
+""" Algorithms analysis:
+What is the time complexity of each function? Explain best and worst cases. You can
+include a comment within your code as an answer """
 
 
 #number of all possible appointments for one day
@@ -120,13 +122,21 @@ class HealthCenter2(BinarySearchTree):
 
 
 
-
+    
     def searchPatients(self,year=2021,covid=None,vaccine=None):
         """return a new object of type HealthCenter 2 with the patients who
         satisfy the criteria of the search (parameters). 
         The function has to visit all patients, so the search must follow a level traverse of the tree.
         If you use a inorder traverse, the resulting tree should be a list!!!"""
         
+        """ Time Complexity:
+            -Each node is visited only once in inorder traversal 
+            and hence the complexity of this function is O(n).
+            -Best case would be that the tree is empty.
+            -???????? Worst case would be that the patient isnt on the tree or that it is the last node visited ????????
+        """
+
+
         result=HealthCenter2()
 
         if self._root==None:
@@ -164,7 +174,14 @@ class HealthCenter2(BinarySearchTree):
         """This functions simulates the vaccination of a patient whose
         name is name. It returns True is the patient is vaccinated and False eoc"""
 
-        patient_node = self.find(name)
+
+        """ Time Complexity:
+            The complexity of this function is O(h) = (O(log n)) where h is height of the BST. 
+            -Best case would be that the patient isn't in the tree. ??????????
+            The worst case complexity is O(n) being n the number of nodes."""
+
+
+        patient_node = self.find(name) #time complexity of find is O(h) where h is height of BST (O(log n))
         
         if patient_node is None:
             print("Patient '", name, "' not found")
@@ -174,8 +191,8 @@ class HealthCenter2(BinarySearchTree):
 
         if patient.vaccine == 2:
             print("patient '", name, "' is vaccinated")
-            self.remove(name)
-            vaccinated.insert(name, patient)
+            self.remove(name) #time complexity is O(h). (O(log n))
+            vaccinated.insert(name, patient) #time complexity is O(h). (O(log n))
             return False
         
         if patient.vaccine < 2 or patient.covid == False:
@@ -204,6 +221,14 @@ class HealthCenter2(BinarySearchTree):
         """This functions makes an appointment 
         for the patient whose name is name. It functions returns True is the appointment 
         is created and False eoc """
+
+        """ ??????????????'Time Complexity:
+            The complexity of this function is O(h) = (O(log n)) where h is height of the BST. 
+            -Best case would be that the hour isn't in the tree/the patient doesn't exist
+            /the patient has already both doses.
+            The worst case would be that all the hours are filled and it has to check through all the tree schedule.
+            ?????????"""
+
         #We check if the hour has a correct format
         if checkFormatHour(time) == False:
             print("Incorrect Hour")
@@ -221,7 +246,7 @@ class HealthCenter2(BinarySearchTree):
                 print("Patient {} has  already both doses".format(name))
                 return False
 
-        found = schedule.search(time)     
+        found = schedule.search(time)  #time complexity is O(h) where h is height of BST. (O(log n))  
 
         if found == False:
             patient_node.elem.appointment = time
@@ -245,8 +270,8 @@ class HealthCenter2(BinarySearchTree):
         hour_post = hour_time
             
         while not finished:
-            
-            
+
+            #We check if the minutes and hours are correct, if not they jump to the next hour or the previous one   
             if min_pre<0:
                 min_pre = 55
                 hour_pre -= 1
@@ -258,7 +283,7 @@ class HealthCenter2(BinarySearchTree):
             if hour_post >19 and hour_pre < 8:
                 finished = True
                 
-          
+            #We convert the minutes and hours to correct string times with format (0x:0x) when needed.
             str_min_pre = str(min_pre)
             if min_pre<10:
                 str_min_pre = "0"+str_min_pre 
@@ -279,16 +304,17 @@ class HealthCenter2(BinarySearchTree):
             str_post = str_hour_post+":"+str_min_post
             
             
+            #Checks if the previous hour is found, if it is not, it means that it is available.
             if hour_pre >= 8:
-                found_pre = schedule.search(str_pre)
+                found_pre = schedule.search(str_pre) #time complexity is O(h) (O(log n))
             else:
                 found_pre = True
                 
-                
+            #Checks if the posterior hour is found, if it is not, it means that it is available.    
             if hour_post > 19:
                 found_post = True
             else:
-                found_post = schedule.search(str_post)
+                found_post = schedule.search(str_post) #time complexity is O(h) (O(log n))
                 
             
             #Here first we check the previous hour because if it is available then we assign it because its the earlier one.
@@ -296,8 +322,7 @@ class HealthCenter2(BinarySearchTree):
                 print("Requested Hour: ", time)
                 print("Closest free hour: ", str_pre)
                 patient_node.elem.appointment = str_pre
-
-                schedule.insert(str_pre, patient_node.elem)
+                schedule.insert(str_pre, patient_node.elem) #time complexity is O(h) (O(log n))
                 added = True
                 finished = True
             #If there are not earlier hours available, then we check for the later ones.
@@ -306,7 +331,7 @@ class HealthCenter2(BinarySearchTree):
                     print("Requested Hour: ", time)
                     print("Closest free hour: ", str_post)
                     patient_node.elem.appointment = str_post
-                    schedule.insert(str_post, patient_node.elem)
+                    schedule.insert(str_post, patient_node.elem) #time complexity is O(h) (O(log n))
                     added = True
                     finished = True
                 else:
