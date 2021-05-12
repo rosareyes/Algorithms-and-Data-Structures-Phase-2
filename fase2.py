@@ -119,9 +119,6 @@ class HealthCenter2(BinarySearchTree):
     
             fichero.close()
 
-
-
-
     
     def searchPatients(self,year=2021,covid=None,vaccine=None):
         """return a new object of type HealthCenter 2 with the patients who
@@ -209,7 +206,7 @@ class HealthCenter2(BinarySearchTree):
         if patient.vaccine == 1 or patient.covid == True:
             patient.vaccine = 2
             self.remove(name)
-            vaccinated.insert(name, paciente)
+            vaccinated.insert(name, patient)
             print("The database of the patient '", name, "' has been updated")
             print("dose until now: ", patient.vaccine)
             return True
