@@ -133,7 +133,7 @@ class HealthCenter2(BinarySearchTree):
             -Each node is visited only once in inorder traversal 
             and hence the complexity of this function is O(n).
             -Best case would be that the tree is empty.
-            -???????? Worst case would be that the patient isnt on the tree or that it is the last node visited ????????
+            -Worst case would be that the patient isnt on the tree or that it is the last node visited. So its also O(n)
         """
 
 
@@ -176,9 +176,9 @@ class HealthCenter2(BinarySearchTree):
 
 
         """ Time Complexity:
-            The complexity of this function is O(h) = (O(log n)) where h is height of the BST. 
-            -Best case would be that the patient isn't in the tree. ??????????
-            The worst case complexity is O(n) being n the number of nodes."""
+            The complexity of this function is O(log n). 
+            -Best case would be that the patient isn't in the tree. 
+            The worst case complexity is O(n) being n the number of nodes in the case our tree is skewed"""
 
 
         patient_node = self.find(name) #time complexity of find is O(h) where h is height of BST (O(log n))
@@ -222,12 +222,11 @@ class HealthCenter2(BinarySearchTree):
         for the patient whose name is name. It functions returns True is the appointment 
         is created and False eoc """
 
-        """ ??????????????'Time Complexity:
-            The complexity of this function is O(h) = (O(log n)) where h is height of the BST. 
-            -Best case would be that the hour isn't in the tree/the patient doesn't exist
-            /the patient has already both doses.
-            The worst case would be that all the hours are filled and it has to check through all the tree schedule.
-            ?????????"""
+        """ Time Complexity:
+            The complexity of this function is O(n log n) because BST functions are inside a loop. 
+            --Best case would be that the tree is empty.
+            The worst case would be O(n log n) when you traverse all the tree because the bst functions are inside a loop.
+        """
 
         #We check if the hour has a correct format
         if checkFormatHour(time) == False:
