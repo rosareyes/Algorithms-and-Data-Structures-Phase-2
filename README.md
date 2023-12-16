@@ -31,3 +31,7 @@ bst.insert(20, "Data3")
 # Print in order
 bst.inorder()
 ```
+
+## Contact
+
+Rosa Reyes: [LinkedIn](https://www.linkedin.com/in/rosaareyesc/)
